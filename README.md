@@ -1,6 +1,6 @@
 # VOM_COM
 
-Vom_Com was a discord bot I began making to show my younger sister the possibilities of coding, while using an interesting platform (discord) which is used by her and her friends.
+Vom_Com was a discord bot I began making to show my younger sister the possibilities of coding, while using an interesting platform (discord) which is used by her and her friends. The name VOM_COM comes from the initial picture sent when you tell the bot you dont feel so good, and it replies with a picture of our dog vomiting.
 
 ## Functionality
 
