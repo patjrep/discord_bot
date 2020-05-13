@@ -59,9 +59,11 @@ const ID = msg.author.username;
   if (msg.content === "What's in stock?") {
     stocked_items = {"cat": 500, "dog": 700, "lucy": 9999};
     stocked_arr = [];
+    plain_inv = [];
     //pushes keys and values from stocked_items to stocked_arr
     for (i in stocked_items) {
-      stocked_arr.push(i + ' $' + stocked_items[i] + '\n')
+      stocked_arr.push(i + ' $' + stocked_items[i] + '\n');
+      plain_inv.push(i + stocked_items[i]);
     }
     msg.reply(stocked_arr + '\n\n' + 'Would you like to buy anything? Y/N')
     console.log(stocked_arr)
@@ -78,12 +80,14 @@ const ID = msg.author.username;
                   console.log(stocked_arr.length);
                   if (isNaN(buy) == false && (0 <= buy <= stocked_arr.length)) {
                     choice = buy - 1;
-                    var keys = [...stocked_items.keys()];
-                    var values = [...stocked_items.values()];
+                    var keys = Object.keys(stocked_items);
+                    var values = Object.values(stocked_items);
                     console.log(choice)
-                    client.inventory.set(ID, stocked_arr[choice]);
+                    //client.inventory.set(ID, stocked_arr[choice]);
+                    client.inventory.set(plain_inv[choice]);
                     console.log(client.inventory)
-                    msg.reply("You bought a " + stocked_items(keys[choice] + values[choice]) + "!")
+                    msg.reply("You bought a " + keys[choice] + " for $" + values[choice] + "!")
+                    console.log(stocked_items[keys[choice]])
                   } else {
                     msg.reply("That choice doesn't exist!")
                   }
@@ -93,14 +97,22 @@ const ID = msg.author.username;
                 msg.channel.send("Goodbye");
             }
         })
-
-
-    //dict.push({
-      // key:   "keyName",
-      // value: "the value"
-  //});
-
   };
+
+  if (msg.content === "My inv") {
+    let personal_inv = [];
+    var keys = [...client.inventory.keys()];
+    var values = [...client.inventory.values()];
+    console.log(personal_inv + 'here')
+    count = 0;
+    while (count < keys.length) {
+      personal_inv.push(keys[count] + values[count] + '\n')
+      count ++
+      console.log(personal_inv)
+    }
+    msg.reply("You have: \n" + personal_inv);
+  };
+
 
   if (msg.content === "How wealthy am I?") {
     msg.reply("You currently have $" + client.money.get(ID));
